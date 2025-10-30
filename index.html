@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python & Lenguaje Natural - Catálogo de Tareas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%2311998e" width="1200" height="600"/><g fill-opacity="0.1"><circle fill="white" cx="200" cy="100" r="80"/><circle fill="white" cx="800" cy="400" r="120"/><circle fill="white" cx="400" cy="500" r="60"/><circle fill="white" cx="1000" cy="150" r="90"/></g></svg>') center/cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #1e3a8a;
+        }
+
+        .hero .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .hero .description {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Catalog Section */
+        .catalog {
+            min-height: 100vh;
+            background: #f5f5f5;
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: white;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 18px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .card-button {
+            display: inline-block;
+            width: 100%;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .card-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero .description {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Python & Lenguaje Natural</h1>
+            <h1>Cristian Eduardo Niños Molina</h1>
+            <p class="subtitle">Procesamiento de Texto con Python</p>
+            <p class="description">
+                Explora una colección de herramientas y scripts de Python para procesamiento de lenguaje natural. 
+                Desde tokenización hasta análisis de sentimientos.
+            </p>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section class="catalog">
+        <div class="container">
+            <h2 class="section-title">Catálogo de Tareas</h2>
+            
+            <div class="cards-grid">
+                <!-- Card 1: Tokenizar -->
+                <div class="card">
+                    <div class="card-image">
+                        📝
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Tokenizar</h3>
+                        <p class="card-description">
+                            Divide texto en palabras, frases o tokens individuales. Ideal para preprocesamiento 
+                            de textos y análisis lingüístico básico.
+                        </p>
+                        <a href="token.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Longitud de Palabras -->
+                <div class="card">
+                    <div class="card-image">
+                        📏
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Longitud de Palabras</h3>
+                        <p class="card-description">
+                            Calcula la longitud promedio de palabras en un texto. Útil para análisis de 
+                            complejidad textual y legibilidad.
+                        </p>
+                        <a href="longitud_de_palabras.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3: Contar Palabras -->
+                <div class="card">
+                    <div class="card-image">
+                        🔢
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Contar Palabras</h3>
+                        <p class="card-description">
+                            Cuenta la frecuencia de aparición de palabras en un texto. Perfecto para análisis 
+                            de frecuencia y generación de nubes de palabras.
+                        </p>
+                        <a href="frecuencia.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 4: Análisis de Sentimiento -->
+                <div class="card">
+                    <div class="card-image">
+                        😊
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Análisis de Sentimiento</h3>
+                        <p class="card-description">
+                            Determina si un texto tiene un sentimiento positivo, negativo o neutral. 
+                            Esencial para análisis de opiniones y redes sociales.
+                        </p>
+                        <a href="analisis_de_sentimiento.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 5: Eliminar Signos de Puntuación -->
+                <div class="card">
+                    <div class="card-image">
+                        🧹
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Eliminar Puntuación</h3>
+                        <p class="card-description">
+                            Limpia el texto eliminando signos de puntuación. Importante para normalización 
+                            de texto y preparación de datos.
+                        </p>
+                        <a href="eliminar_signos.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image">
+                        🤔📖
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">procesamiento</h3>
+                        <p class="card-description">
+                             prepara datos para que se pueda analizar y procesarlos eficientemente.
+                        </p>
+                        <a href="preprocesamiento.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image">
+                        🗼🏳‍🏳🏳
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">traductor</h3>
+                        <p class="card-description">
+                             traducir idiomas.
+                        </p>
+                        <a href="traductor.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+                <!-- Card 8: Eliminar Signos de Puntuación -->
+                <div class="card">
+                    <div class="card-image">
+                        🔊🔊🏳️
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Un traductor 2.0</h3>
+                        <p class="card-description">
+                            traduce un texto al idioma elegido.
+                        </p>
+                        <a href="traductor2.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+                <!-- Card 9: texblod -->
+                <div class="card">
+                    <div class="card-image">
+                        😁😒😭
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">texblod</h3>
+                        <p class="card-description">
+                            analiza el sentimiento y la polaridad de una frase.
+                        </p>
+                        <a href="texblod.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+                <!-- Card 10:practica con texblod -->
+                <div class="card">
+                    <div class="card-image">
+                        🤔💭🥹
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Practica de texblod</h3>
+                        <p class="card-description">
+                            usa una frase para traducirla para despues analizarla 
+                            y decirte si es un texto muy triste, triste, alegre, muy alegre
+                            o neutro.
+                        </p>
+                        <a href="practica_texblod.html" class="downloadCode">
+                            ⬇ Descargar Código.py</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Python & Lenguaje Natural. Todos los derechos reservados.</p>
+        <p>Procesamiento de Lenguaje Natural con Python</p>
+    </footer>
+
+    <script>
+        // Códigos de Python para cada tarea
+        const pythonCodes = {
+            tokenizar: `# Tokenizar texto
+import re
+
+def tokenizar(texto):
+    """
+    Divide un texto en tokens (palabras)
+    """
+    # Convertir a minúsculas y dividir por espacios
+    tokens = texto.lower().split()
+    
+    # Alternativamente, usar regex para mayor precisión
+    # tokens = re.findall(r'\\b\\w+\\b', texto.lower())
+    
+    return tokens
+
+# Ejemplo de uso
+texto = "Python es un lenguaje de programación increíble para NLP."
+tokens = tokenizar(texto)
+print("Tokens:", tokens)
+print("Total de tokens:", len(tokens))`,
+
+            longitud: `# Calcular longitud de palabras
+def longitud_palabras(texto):
+    """
+    Calcula la longitud promedio de palabras en un texto
+    """
+    palabras = texto.split()
+    
+    if not palabras:
+        return 0
+    
+    longitudes = [len(palabra) for palabra in palabras]
+    promedio = sum(longitudes) / len(longitudes)
+    
+    # Mostrar estadísticas
+    print(f"Total de palabras: {len(palabras)}")
+    print(f"Longitud promedio: {promedio:.2f} caracteres")
+    print(f"Palabra más corta: {min(palabras, key=len)} ({min(longitudes)} caracteres)")
+    print(f"Palabra más larga: {max(palabras, key=len)} ({max(longitudes)} caracteres)")
+    
+    return promedio
+
+# Ejemplo de uso
+texto = "El procesamiento de lenguaje natural es fascinante"
+promedio = longitud_palabras(texto)`,
+
+            contar: `# Contar palabras
+from collections import Counter
+
+def contar_palabras(texto):
+    """
+    Cuenta la frecuencia de cada palabra en un texto
+    """
+    # Convertir a minúsculas y dividir
+    palabras = texto.lower().split()
+    
+    # Contar frecuencias
+    contador = Counter(palabras)
+    
+    # Mostrar las 10 palabras más comunes
+    print("Palabras más frecuentes:")
+    for palabra, frecuencia in contador.most_common(10):
+        print(f"{palabra}: {frecuencia}")
+    
+    return contador
+
+# Ejemplo de uso
+texto = """
+Python es un lenguaje de programación versátil.
+Python es fácil de aprender y Python es muy popular.
+"""
+frecuencias = contar_palabras(texto)`,
+
+            sentimiento: `# Análisis de sentimiento básico
+def analizar_sentimiento(texto):
+    """
+    Análisis de sentimiento básico usando palabras positivas y negativas
+    """
+    # Listas de palabras (ampliables)
+    positivas = ['bueno', 'excelente', 'genial', 'increíble', 'fantástico', 
+                 'feliz', 'alegre', 'maravilloso', 'amor', 'perfecto']
+    negativas = ['malo', 'terrible', 'horrible', 'pésimo', 'triste', 
+                 'odio', 'desagradable', 'decepcionante', 'peor', 'fatal']
+    
+    texto_lower = texto.lower()
+    palabras = texto_lower.split()
+    
+    # Contar palabras positivas y negativas
+    puntaje_positivo = sum(1 for palabra in palabras if palabra in positivas)
+    puntaje_negativo = sum(1 for palabra in palabras if palabra in negativas)
+    
+    # Determinar sentimiento
+    puntaje_total = puntaje_positivo - puntaje_negativo
+    
+    if puntaje_total > 0:
+        sentimiento = "POSITIVO"
+    elif puntaje_total < 0:
+        sentimiento = "NEGATIVO"
+    else:
+        sentimiento = "NEUTRAL"
+    
+    print(f"Sentimiento: {sentimiento}")
+    print(f"Palabras positivas: {puntaje_positivo}")
+    print(f"Palabras negativas: {puntaje_negativo}")
+    print(f"Puntaje: {puntaje_total}")
+    
+    return sentimiento, puntaje_total
+
+# Ejemplo de uso
+texto = "Este producto es excelente y fantástico, me hace muy feliz"
+sentimiento, puntaje = analizar_sentimiento(texto)`,
+
+            puntuacion: `# Eliminar signos de puntuación
+import string
+
+def eliminar_puntuacion(texto):
+    """
+    Elimina todos los signos de puntuación de un texto
+    """
+    # Método 1: Usando string.punctuation
+    texto_limpio = texto.translate(str.maketrans('', '', string.punctuation))
+    
+    # Método 2: Usando comprensión de listas
+    # texto_limpio = ''.join(char for char in texto if char not in string.punctuation)
+    
+    print("Texto original:")
+    print(texto)
+    print("\\nTexto sin puntuación:")
+    print(texto_limpio)
+    
+    return texto_limpio
+
+# Ejemplo de uso
+texto = "¡Hola! ¿Cómo estás? Python es genial, ¿verdad?"
+texto_sin_puntuacion = eliminar_puntuacion(texto)
+
+# Extra: También puedes conservar algunos caracteres
+def eliminar_puntuacion_personalizado(texto, mantener=''):
+    """
+    Elimina puntuación pero mantiene ciertos caracteres
+    """
+    puntuacion_a_eliminar = ''.join(c for c in string.punctuation if c not in mantener)
+    return texto.translate(str.maketrans('', '', puntuacion_a_eliminar))`
+        };
+
+        function downloadCode(tipo) {
+            const codigo = pythonCodes[tipo];
+            const blob = new Blob([codigo], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${tipo}_python.py`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Smooth scroll para el indicador
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('.catalog').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
