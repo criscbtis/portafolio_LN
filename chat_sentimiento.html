@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema con Código y Glosario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content-wrapper {
+            background: #f5f5f5;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .tema-titulo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .tema-titulo h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .tema-titulo p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h3 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .code-container {
+            background: #2d3748;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        .code-container pre {
+            margin: 0;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .code-container code {
+            display: block;
+        }
+
+        .keyword { color: #ff79c6; }
+        .function { color: #50fa7b; }
+        .string { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+        .number { color: #bd93f9; }
+
+        .glosario-item {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glosario-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .glosario-item h4 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .glosario-item p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .parametros {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .parametros strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .parametros code {
+            background: #2d3748;
+            color: #50fa7b;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .tema-titulo h2 {
+                font-size: 1.5em;
+            }
+
+            .section h3 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Realizado por: Cristian Eduardo Niños Molina</h1>
+            <p>Especialidad de IA del CBTIS 144</p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="tema-titulo">
+                <h2>Un chat bot con sentimientos</h2>
+                <p>Creación y uso de funciones personalizadas</p>
+            </div>
+
+            <div class="section">
+                <h3>📝 Código del Ejemplo</h3>
+                <div class="code-container">
+                    <pre>
+"""el chat bot pregunte como te sientes hoy, y te conteste con un mensajito positivo o negativo
+segun el analisis de texto"""
+from deep_translator import GoogleTranslator
+import random
+from textblob import TextBlob
+saludos=["hola","que tal","buenos dias","buenas tardes","buen dia"]
+respuestas_saludos=["hola","como estas?",
+                    "como puedo ayudarte",
+                    "hola, como te va",
+                    "que hay?"]
+
+despedida=["adios","bye","gracias","nos vemos","hasta luego"]
+respuestas_despedida=[
+    "adios, hasta pronto",
+    "fue un placer ayudarte",
+    "cuidate",
+    "nos vemos luego"
+    "bye"
+]
+respuestas_alegres=["vamos, esa es la actitud","tu puedes","dios te acompaña en este camino",
+                    "que nadie te quite esa felicidad"]
+respuestas_motivacionales=["echale gans hijit@ tu puedes","adeleante no decepciones a spider-man",
+                           "es solo una etapa","dios te quiere mucho y el esta contigo"]
+
+preguntas=["necesito reirme","¿me cuentas un chiste?",
+           "¿te sabes algun chiste?","¿puedes hacerme reir?",
+           "¿necesito un chiste?","¿quiero pasar un buen momento?","otro"]
+respuestas_preguntas=["habia un pollito que respiraba por la cola un dia se sento y se murio🐥💀⚰",
+                      "habia un niño que se llamaba tarea, un dia dijeron tarea para casa \ny tarea se fue a su casa🏠⬅🚶‍♂️",
+                      "si donde venden zapatos es una zapateria👞,\n"
+                      "donde venden pan es una panaderia🍞\n"
+                      "donde venden queso ¿que seria?🧀",
+                      "¿qué le dice una taza a otra?🍵🗣🍵 ¿qué taza ciendo?",
+                      "fui a una clase de yoga🧘‍♀... y me estiraron hasta el límite de mi paciencia.😡😡️",
+                      "¿por qué el libro de matemáticas estaba triste? porque tenía demasiados problemas📄📄.",
+                      "¿qué se necesita para encender una vela🕯🕯? Que esté apagada."]
+
+
+
+
+
+#mensaje de bienbenida al chatbot
+print("hola soy Chato, tu chatbot de confianza,si deseas"
+      "terminar escribe salir")
+
+while True:
+    usuario=input("Tu: ").lower().strip()
+    traduccion = GoogleTranslator(source='es', target='en').translate(usuario)
+
+    analizar = TextBlob(traduccion)
+    sentimiento = analizar.sentiment
+
+    sen = sentimiento.polarity
+
+    if usuario in saludos:
+        print("chatbot:",random.choice(respuestas_saludos))
+    elif usuario in despedida:
+        print("chatbot:",random.choice(respuestas_despedida))
+    elif usuario in preguntas:
+        print("chatbot:",random.choice(respuestas_preguntas))
+    elif sen >= 0:
+        print("sentimiento alegre")
+        print("chatbot:",random.choice(respuestas_alegres))
+    elif sen < 0:
+        print("sentimiento negativo")
+        print("chatbot:",random.choice(respuestas_motivacionales))
+
+    elif usuario =="salir":
+        print("goodbye")
+        break
+    else:
+        print("escribe bien, no te entiendo tampoco tu ex por eso te dejo")</pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>📚 Glosario de Funciones</h3>
+
+                <div class="glosario-item">
+                    <h4>import random</h4>
+                    <p>se llama a la libreria random.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>elif e if</h4>
+                    <p>son condicionales.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>.strip</h4>
+                    <p>quita los espacios de un texto.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>.lower</h4>
+                    <p>hace a minusculas las frases.</p>
+                    </div>
+
+
+                <div class="glosario-item">
+                    <h4>print</h4>
+                    <p>imprime un valor en la pantalla.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>while</h4>
+                    <p>es un ciclo infinito.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>from, import</h4>
+                    <p>llama a las librerias que se usaron como googletraducto,random y texblod.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>.sentiment</h4>
+                    <p>analiza los sentimientos de un texto.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>.polarity</h4>
+                    <p>analiza la polaridad de un texto y que tan bueno 
+                    o malo es.</p>
+                    </div>
+                    
+                <div class="glosario-item">
+                    <h4>traduccion = GoogleTranslator(source='es', target='en').translate(usuario)</h4>
+                    <p>tranfroma el texto de español a ingles.</p>
+                    </div>
+
+                <div class="glosario-item">
+                    <h4>input</h4>
+                    <p>pide datos al usuario.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
