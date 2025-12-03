@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de Chatbots</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #0f0;
+            text-shadow: 0 0 15px #0f0;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        .catalogo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px;
+        }
+        .card {
+            background-color: #000;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 0, 1);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .card h3 {
+            margin-top: 15px;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Librerías de PNL para Chatbots</h1>
+        <p>Trabajo realizado por: Cristian Eduardo Niños Molina</p>
+    </section>
+    <section class="catalogo">
+        <a href=\"#\"><div class="card">
+            <img src="https://via.placeholder.com/300x180" alt="Chatbots con PNL">
+            <h3>💬 Chatbots con PNL</h3>
+            <p>Interactúan mediante lenguaje natural comprendiendo la intención del usuario.</p>
+        </div></a>
+        <a href=\"#\"><div class="card">
+            <img src="https://via.placeholder.com/300x180" alt="Chatbots con IA">
+            <h3>🤖 Chatbots con IA</h3>
+            <p>Usan modelos avanzados para generar respuestas inteligentes y personalizadas.</p>
+        </div></a>
+        <a href=\"#\"><div class="card">
+            <img src="https://via.placeholder.com/300x180" alt="Chatbots conectados a plataformas">
+            <h3>📱 Chatbots conectados a plataformas</h3>
+            <p>Integrados con servicios como WhatsApp o Telegram para facilitar la comunicación.</p>
+        </div></a>
+        <a href=\"#\"><div class="card">
+            <img src="https://via.placeholder.com/300x180" alt="Chatbots en páginas web">
+            <h3>🌐 Chatbots en páginas web</h3>
+            <p>Asisten a visitantes en sitios web resolviendo dudas en tiempo real.</p>
+        </div></a>
+    </section>
+</body>
+</html>
